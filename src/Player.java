@@ -14,4 +14,11 @@ public class Player
 	{
 		return this.name;
 	}
+	
+	public String getWords()
+	{
+		//if()
+		System.out.println(this.name + " got the words:");
+		return "None";
+	}
 }

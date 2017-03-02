@@ -1,7 +1,16 @@
+import java.util.Random;
+
 public class LetterFactory
 {
-	public Letter getLetter()
+	public static Letter getLetter()
 	{
-		return new Letter();
+		return new Letter(getRandomCharacter());
+	}
+	
+	private static char getRandomCharacter()
+	{
+		Random r = new Random();
+		char randomCharacter = (char)(r.nextInt(26) + 'A');
+		return randomCharacter;
 	}
 }

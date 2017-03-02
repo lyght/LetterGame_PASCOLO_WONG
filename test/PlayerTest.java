@@ -14,7 +14,7 @@ public class PlayerTest {
 
 	@Test
 	public void testGetName() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }

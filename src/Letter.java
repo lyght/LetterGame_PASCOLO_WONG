@@ -3,17 +3,12 @@ import java.util.Random;
 public class Letter
 {
 	char letterCharacter;
-	Letter()
+	Letter(char letterCharacter)
 	{
-		letterCharacter = getRandomLetter();
+		this.letterCharacter = letterCharacter;
 	}
 	
-	private char getRandomLetter()
-	{
-		Random r = new Random();
-		char randomCharacter = (char)(r.nextInt(26) + 'A');
-		return randomCharacter;
-	}
+	
 	
 	public String toString()
 	{
