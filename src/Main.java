@@ -5,7 +5,8 @@ public class Main {
 	{
 		System.out.println("Welcome to the Letter Game !");
 		Game game = new Game(2);
-		game.showCommonPot();
+		game.launchGame();
+		//game.showCommonPot();
 	}
 
 }
