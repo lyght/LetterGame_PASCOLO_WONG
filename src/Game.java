@@ -174,10 +174,24 @@ public class Game
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Enter the name of the player:");
 		playerName = reader.nextLine();
+		
 		Player playerToSteal = getPlayerByName(playerName);
+		
 		String wordToStealString;
 		System.out.println("Enter the word you want to steal:");
 		wordToStealString = reader.nextLine();
+		Word wordToSteal = new Word(wordToStealString);
+		if(playerToSteal.hasWord(wordToSteal))
+		{
+			Word newWord;
+			System.out.println("Enter the new word:");
+			newWord = new Word(reader.nextLine());
+			//wordToSteal
+			//ENVOYER LETTRES RESTANTES APRES LETTRES DU MOTS ELEVEES
+			//doesCommonPotContainsLettersOf(lettres restantes);
+		}
+		
+		
 		if(playerToSteal.stealWord(new Word(wordToStealString)))
 		{
 			players.get(currentPlayerIndex).addWordToPlayerBoard(wordToStealString);

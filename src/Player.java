@@ -33,12 +33,22 @@ public class Player
 		playerBoard.add(new Word(wordString));
 	}
 	
-	public boolean stealWord(Word wordStolen)
+	public boolean hasWord(Word wordStolen)
 	{
-		System.out.println("Word to test is " + wordStolen.toString());
 		for(Word word : playerBoard)
 		{
-			System.out.println("Word of PlayerBoard is " + word.toString());
+			if(word.equals(wordStolen))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean stealWord(Word wordStolen)
+	{
+		for(Word word : playerBoard)
+		{
 			if(word.equals(wordStolen))
 			{
 				playerBoard.remove(wordStolen);
