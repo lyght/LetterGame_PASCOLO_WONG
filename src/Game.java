@@ -156,13 +156,15 @@ public class Game
 	
 	private boolean makeWordWithCommonLetters()
 	{
-		String word;
+		String wordString;
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Enter the word you want to make:");
-		word = reader.nextLine();
-		if(doesCommonPotContainsLettersOf(new Word(word)) && dictionnary.isWordValid(word))
+		wordString = reader.nextLine();
+		Word word = new Word(wordString);
+		if(dictionnary.isWordValid(wordString) && doesCommonPotContainsLettersOf(word))
 		{
-			System.out.println("The word " + word + " has been added to your player board.");
+			players.get(currentPlayerIndex).addWordToPlayerBoard(wordString);
+			System.out.println("The word " + wordString.toUpperCase() + " has been added to your player board.");
 			return true;
 		}
 		return false;
@@ -175,13 +177,12 @@ public class Game
 		System.out.println("Enter the name of the player:");
 		playerName = reader.nextLine();
 		Player playerToSteal = getPlayerByName(playerName);
-		String wordToSteal;
-		//Scanner reader = new Scanner(System.in);
+		String wordToStealString;
 		System.out.println("Enter the word you want to steal:");
-		wordToSteal = reader.nextLine();
-		if(playerToSteal.stealWord(new Word(wordToSteal)))
+		wordToStealString = reader.nextLine();
+		if(playerToSteal.stealWord(new Word(wordToStealString)))
 		{
-			System.out.println("Word stolen");
+			players.get(currentPlayerIndex).addWordToPlayerBoard(wordToStealString);
 			return true;
 		}
 		return false;
