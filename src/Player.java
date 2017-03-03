@@ -23,26 +23,31 @@ public class Player
 		if(playerBoard.size() > 0)
 		{
 			System.out.println(this.name + " got the words:");
-			System.out.println(playerBoard.toString());
+			for(Word word : playerBoard)
+				System.out.println(word.toString());
 		}
 	}
 	
-	public void addWordToPlayerBoard(Word wordToAdd)
+	public void addWordToPlayerBoard(String wordString)
 	{
-		playerBoard.add(wordToAdd);
+		playerBoard.add(new Word(wordString));
 	}
 	
 	public boolean stealWord(Word wordStolen)
 	{
-		if (playerBoard.contains(wordStolen))
+		System.out.println("Word to test is " + wordStolen.toString());
+		for(Word word : playerBoard)
 		{
-			return true;
+			System.out.println("Word of PlayerBoard is " + word.toString());
+			if(word.equals(wordStolen))
+			{
+				playerBoard.remove(wordStolen);
+				return true;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
+
 	 @Override
 	    public boolean equals(Object o) {
 /*
