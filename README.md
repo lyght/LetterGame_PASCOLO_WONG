@@ -41,7 +41,7 @@ Il y a deux packages principaux,
 Le dossier resources du package **src** contient deux fichiers :  
    * **dico.txt** qui correspond au dictionniaire de mots récupéré à l'adresse  
    http://www.freelang.com/dictionnaire/dic-francais.php
-   * **lettersFrequency** contenant à la suite les occurrences de mots et généré par nos soins grâce à un autre programme Java.
+   * **lettersFrequency** contenant à la suite les occurrences de mots générées par nos soins.
 
 ## Trois principes SOLID ou Design Patterns utilisés
 
