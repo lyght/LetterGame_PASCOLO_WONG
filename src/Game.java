@@ -50,7 +50,7 @@ public class Game
 	
 	private void createIA()
 	{
-		for(int i = 0; i< nbOfIA;i++)
+		for(int i = nbOfPlayers; i< nbOfIA+nbOfPlayers;i++)
 		{
 			System.out.println("Player IA " + (i+1) + " :");
 			addNewIA(i);
@@ -92,7 +92,7 @@ public class Game
 				System.out.println("Somebody already has this name !");
 				return false;
 			}
-			if(player.getName().contains("(IA)"))
+			if(nameToTest.contains("(IA)"))
 			{
 				System.out.println("You can't put (IA) in a player's name !");
 				return false;
@@ -117,7 +117,7 @@ public class Game
 	
 	private void changePlayer()
 	{
-		currentPlayerIndex = (currentPlayerIndex + 1)%nbOfPlayers;
+		currentPlayerIndex = (currentPlayerIndex + 1)%(nbOfPlayers+nbOfIA);
 		System.out.println();
 		newTurn(currentPlayerIndex);
 	}
@@ -234,6 +234,7 @@ public class Game
 		{
 			String wordString = dictionnary.getWordWithIndex(i);
 			Word word = new Word(wordString);
+			//System.out.println(x);
 			if(doesCommonPotContainsLettersOf(word.getLetters()))
 			{
 				commonPot.removeLetters(word.getLetters());
@@ -284,7 +285,7 @@ public class Game
 	{
 		for(Player player : players)
 		{
-			if(player.getName().equalsIgnoreCase(playerName))
+			if(player.getName().equalsIgnoreCase(playerName) || (player.getName()).equalsIgnoreCase(playerName + "(IA)"))
 			{
 				return player;
 			}
