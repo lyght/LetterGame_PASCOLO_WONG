@@ -40,7 +40,10 @@ public class DictionnaryTest {
 
 	@Test
 	public void testGetWordWithIndex() {
-		//assertEquals(dico.getWordWithIndex(0),"abaisse".toUpperCase());
+		assertEquals(dico.getWordWithIndex(0),"abaissé".toUpperCase());
+		assertEquals(dico.getWordWithIndex(12283),"jaunir".toUpperCase());
+		assertEquals(dico.getWordWithIndex(22739),"zygote".toUpperCase());
+
 	}
 
 }
