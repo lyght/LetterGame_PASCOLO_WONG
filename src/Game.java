@@ -55,9 +55,7 @@ public class Game
 		String newName;
 		do
 		{
-			Scanner reader = new Scanner(System.in);
-			System.out.println("Enter a name for the player :");
-			newName = reader.nextLine();
+			newName = inputScan("Enter a name for the player :");
 			isPlayerNameValid(newName);
 				
 		}while (isPlayerNameValid(newName) == false);
@@ -86,6 +84,7 @@ public class Game
 
 	public void launchGame()
 	{
+		LetterFactory.initializeLettersFrequency();
 		newTurn(currentPlayerIndex);
 	}
 	
@@ -107,17 +106,20 @@ public class Game
 		{
 			choice = selectChoice();
 		}
-		while(doActionWithChoice(choice))
+		while(choice != 3)
 		{
-			addLettersToCommonPot(1);
-			choice = -1;
-			showCommonPot();
-			showPlayerBoards();
-			System.out.println("You can play again.");
-			while (choice == -1)
+			if(doActionWithChoice(choice))
 			{
-				choice = selectChoice();
+				addLettersToCommonPot(1);
+				choice = -1;
+				showCommonPot();
+				showPlayerBoards();
+				System.out.println("You can play again.");
+				
 			}
+			do{
+				choice = selectChoice();
+			}while(choice == -1);
 		}
 		changePlayer();
 	}
@@ -125,11 +127,11 @@ public class Game
 	private int selectChoice()
 	{
 		Scanner reader = new Scanner(System.in);
-		System.out.println("Enter the number corresponding to your action:\n1 to make a word from the common pot \n2 to make your word from another player word");
+		System.out.println("Enter the number corresponding to your action:\n1 to make a word from the common pot \n2 to make your word from another word\n3 to pass");
 		if(reader.hasNextInt())
 		{
 			int choice = reader.nextInt();
-			if(choice != 1 && choice != 2)
+			if(choice != 1 && choice != 2 && choice != 3)
 			{
 				System.out.println("Please enter a valid choice");
 				return -1;
@@ -148,8 +150,11 @@ public class Game
 	{
 		if(choice == 1)
 			return makeWordWithCommonLetters();
-		else
+		else if(choice == 2)
 			return makeWordWithOtherPlayerWord();
+		else if(choice == 3)
+			return false;
+		return false;
 	}
 	
 	private boolean makeWordWithCommonLetters()
@@ -159,10 +164,10 @@ public class Game
 		System.out.println("Enter the word you want to make:");
 		wordString = reader.nextLine();
 		Word word = new Word(wordString);
-		if(dictionnary.isWordValid(wordString) && doesCommonPotContainsLettersOf(word))
+		if(dictionnary.isWordValid(wordString) && doesCommonPotContainsLettersOf(word.getLetters()))
 		{
+			commonPot.removeLetters(word.getLetters());
 			players.get(currentPlayerIndex).addWordToPlayerBoard(wordString);
-			System.out.println("The word " + wordString.toUpperCase() + " has been added to your player board.");
 			return true;
 		}
 		return false;
@@ -170,18 +175,36 @@ public class Game
 	
 	private boolean makeWordWithOtherPlayerWord()
 	{
-		String playerName;
-		Scanner reader = new Scanner(System.in);
-		System.out.println("Enter the name of the player:");
-		playerName = reader.nextLine();
+		
+		String playerName = inputScan("Enter the name of the player:");
+		
 		Player playerToSteal = getPlayerByName(playerName);
-		String wordToStealString;
-		System.out.println("Enter the word you want to steal:");
-		wordToStealString = reader.nextLine();
-		if(playerToSteal.stealWord(new Word(wordToStealString)))
+		if(playerToSteal == null)
+			return false;
+		
+		String wordToStealString = inputScan("Enter the word you want to steal:");
+		Word wordToSteal = new Word(wordToStealString);
+		if(playerToSteal.hasWord(wordToSteal))
 		{
-			players.get(currentPlayerIndex).addWordToPlayerBoard(wordToStealString);
-			return true;
+			
+			String newWordString = inputScan("Enter the new word:");
+			if(newWordString.equalsIgnoreCase(wordToStealString))
+			{
+				System.out.println("The word needs to be changed");
+				return false;
+			}
+			else
+			{
+				Word newWord = new Word(newWordString);
+				ArrayList<Letter> rest = commonPot.lettersDifference(newWord.getLetters(), wordToSteal.getLetters());
+				if(dictionnary.isWordValid(newWordString) && doesCommonPotContainsLettersOf(rest))
+				{
+					commonPot.removeLetters(rest);
+					playerToSteal.stealWord(wordToSteal);
+					players.get(currentPlayerIndex).addWordToPlayerBoard(newWordString);
+					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -196,13 +219,12 @@ public class Game
 			}
 		}
 		System.out.println("This player does not exist");
-		makeWordWithOtherPlayerWord();
 		return null;
 	}
 	
-	private boolean doesCommonPotContainsLettersOf(Word wordEntered)
+	private boolean doesCommonPotContainsLettersOf(ArrayList<Letter> letters)
 	{
-		return commonPot.isWordPossibleWith(wordEntered.getLetters());
+		return commonPot.isWordPossibleWith(letters);
 	}
 	
 	private void addLettersToCommonPot(int nbOfLetters)
@@ -242,5 +264,17 @@ public class Game
 		System.out.println("The common pot contains the letters:");
 		System.out.println(commonPot.getLetters().toString());
 		System.out.println();
+	}
+	
+	private String inputScan(String question)
+	{
+		Scanner reader = new Scanner(System.in);
+		System.out.println(question);
+		return reader.nextLine();
+	}
+	
+	public static void endGame()
+	{
+		Main.begin();
 	}
 }

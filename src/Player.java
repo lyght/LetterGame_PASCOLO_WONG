@@ -31,16 +31,33 @@ public class Player
 	public void addWordToPlayerBoard(String wordString)
 	{
 		playerBoard.add(new Word(wordString));
+		System.out.println("The word " + wordString.toUpperCase() + " has been added to your player board.");
+		if(playerBoard.size() == 10)
+		{
+			System.out.println("CONGRATULATIONS, YOU WON THE GAME !");
+			Game.endGame();
+		}
+	}
+	
+	public boolean hasWord(Word wordStolen)
+	{
+		for(Word word : playerBoard)
+		{
+			if(word.equals(wordStolen))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public boolean stealWord(Word wordStolen)
 	{
-		System.out.println("Word to test is " + wordStolen.toString());
 		for(Word word : playerBoard)
 		{
-			System.out.println("Word of PlayerBoard is " + word.toString());
 			if(word.equals(wordStolen))
 			{
+				System.out.println("The word " + wordStolen.toString() + " has been removed from " + this.getName().toUpperCase() + "'s player board.");
 				playerBoard.remove(wordStolen);
 				return true;
 			}
@@ -49,8 +66,8 @@ public class Player
 	}
 
 	 @Override
-	    public boolean equals(Object o) {
-
+	    public boolean equals(Object o) 
+	 {
 	        Player player1 = (Player) o;
 	        return id == player1.id &&
 	                Objects.equals(name, player1.name);
@@ -58,7 +75,6 @@ public class Player
 
 	    @Override
 	    public int hashCode() {
-	    	System.out.println(Objects.hash(name,id));
 	        return Objects.hash(name, id);
 	    }
 }
