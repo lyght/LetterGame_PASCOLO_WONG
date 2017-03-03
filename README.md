@@ -7,6 +7,14 @@
 PASCOLO Rémi  
 WONG Gallien
 
+-**Objectif :**
+
+Utiliser des principes d'architecture logicielle afin de créer un jeu de lettres multijoueurs respectant 
+des normes et principes de génie logiciel tels que les principes SOLID ou les design patterns.
+Les règles du jeu sont visibles sur le GitHub du professeur de l'ESIEA responsable du projet, M.Labusquière :  
+
+https://github.com/MLabusquiere/TP_4A_2017_Letter_Game
+
 ## Trois principes SOLID ou Design Patterns utilisés :
 
 -**Open/Close Principle (Player) :**
