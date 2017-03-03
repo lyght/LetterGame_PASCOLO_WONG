@@ -11,9 +11,10 @@ public class Game
 	LetterContainer commonPot = new LetterContainer();
 	
 	int nbOfPlayers = 0;
+	int nbOfIA = 0;
 	int currentPlayerIndex = -1;
 	
-	Game(int nbOfPlayers, String dictionnaryPath)
+	Game(int nbOfPlayersSet, int nbOfIASet, String dictionnaryPath)
 	{
 		try
 		{
@@ -22,8 +23,10 @@ public class Game
 		{
 			e.printStackTrace();
 		}
-		this.nbOfPlayers = nbOfPlayers;
+		this.nbOfPlayers = nbOfPlayersSet;
+		this.nbOfIA = nbOfIASet;
 		createPlayers();
+		createIA();
 		currentPlayerIndex = chooseFirstPlayer();
 	}
 	
@@ -43,6 +46,24 @@ public class Game
 		String name = askPlayerName();
 		Player playerToAdd = new Player(id, name);
 		players.add(playerToAdd);
+	}
+	
+	private void createIA()
+	{
+		for(int i = 0; i< nbOfIA;i++)
+		{
+			System.out.println("Player IA " + (i+1) + " :");
+			addNewIA(i);
+			Letter playerLetter = LetterFactory.getLetter();
+			System.out.println("(" + players.get(i).getName() + " picked letter " + playerLetter + " )\n");
+			commonPot.addLetter(playerLetter);
+		}
+	}
+	private void addNewIA(int id)
+	{
+		String name = askPlayerName();
+		Player iAToAdd = new Player(id, (name + "(IA)"));
+		players.add(iAToAdd);
 	}
 	
 	public int getNbOfPlayers()
@@ -71,6 +92,12 @@ public class Game
 				System.out.println("Somebody already has this name !");
 				return false;
 			}
+			if(player.getName().contains("(IA)"))
+			{
+				System.out.println("You can't put (IA) in a player's name !");
+				return false;
+			}
+					
 		}
 		return true;
 	}
@@ -91,16 +118,38 @@ public class Game
 	private void changePlayer()
 	{
 		currentPlayerIndex = (currentPlayerIndex + 1)%nbOfPlayers;
+		System.out.println();
 		newTurn(currentPlayerIndex);
 	}
 	
 	private void newTurn(int playerIndex)
 	{
-		System.out.println(getPlayerNameFromId(playerIndex) + ", it is your turn.\n");
+		String playerName = getPlayerNameFromId(playerIndex);
+		System.out.println(playerName + (" is now playing.\n").toUpperCase());
 		addLettersToCommonPot(2);
 		showCommonPot();
 		showPlayerBoards();
-		
+		if(!isIA(playerName))
+		{
+			newPlayerTurn(playerIndex);
+		}
+		else
+		{
+			newIATurn(playerName);
+		}
+		changePlayer();
+	}
+	
+	private boolean isIA(String playerName)
+	{
+		if(playerName.contains("(IA)"))
+			return true;
+		else
+			return false;
+	}
+	
+	private void newPlayerTurn(int playerIndex)
+	{
 		int choice = -1;
 		while (choice == -1)
 		{
@@ -121,7 +170,13 @@ public class Game
 				choice = selectChoice();
 			}while(choice == -1);
 		}
-		changePlayer();
+	}
+	
+	private void newIATurn(String playerAIName)
+	{
+		String iAWord = AImakeWordWithCommonLetters();
+		if(iAWord != "")
+			System.out.println(playerAIName + " made the word " + iAWord);
 	}
 	
 	private int selectChoice()
@@ -171,6 +226,22 @@ public class Game
 			return true;
 		}
 		return false;
+	}
+	
+	private String AImakeWordWithCommonLetters()
+	{
+		for(int i=0; i<dictionnary.getNbOfWords(); i++)
+		{
+			String wordString = dictionnary.getWordWithIndex(i);
+			Word word = new Word(wordString);
+			if(doesCommonPotContainsLettersOf(word.getLetters()))
+			{
+				commonPot.removeLetters(word.getLetters());
+				players.get(currentPlayerIndex).addWordToPlayerBoard(wordString);
+				return wordString;
+			}
+		}
+		return "";
 	}
 	
 	private boolean makeWordWithOtherPlayerWord()

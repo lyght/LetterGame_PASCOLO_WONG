@@ -57,7 +57,7 @@ public class Player
 		{
 			if(word.equals(wordStolen))
 			{
-				System.out.println("The word " + wordStolen.toString() + " has been removed from " + this.getName().toUpperCase() + "'s player board.");
+				System.out.println("The word " + wordStolen.toString() + " has been removed from " + this.getName() + "'s player board.");
 				playerBoard.remove(wordStolen);
 				return true;
 			}

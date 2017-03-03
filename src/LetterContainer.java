@@ -31,7 +31,7 @@ public class LetterContainer
 		ArrayList<Letter> lettersSave = new ArrayList<Letter>(lettersToTest);
 		if(lettersSave.size() > letters.size())
 		{
-			System.out.println("This word cannot be made with available letters.");
+			//System.out.println("This word cannot be made with available letters.");
 			return false;
 		}
 		lettersSave = lettersDifference(lettersSave, letters);
