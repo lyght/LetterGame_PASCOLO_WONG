@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 import java.io.File;
 import java.io.FileNotFoundException;

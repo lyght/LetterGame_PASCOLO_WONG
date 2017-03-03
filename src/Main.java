@@ -27,6 +27,7 @@ public class Main {
 	
 	private static int inputNumberScan(String question, int min)
 	{
+		@SuppressWarnings("resource")
 		Scanner reader = new Scanner(System.in);
 		System.out.println(question);
 		if(reader.hasNextInt())

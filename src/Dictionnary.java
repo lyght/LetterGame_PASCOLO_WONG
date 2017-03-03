@@ -9,6 +9,7 @@ public class Dictionnary
 	
 	Dictionnary(String path) throws FileNotFoundException
 	{
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(new File(path));
 		
 		while (scanner.hasNext())
