@@ -50,11 +50,7 @@ public class Player
 
 	 @Override
 	    public boolean equals(Object o) {
-/*
-	        if (o == this) return true;
-	        if (!(o instanceof Player)) {
-	            return false;
-	        }*/
+
 	        Player player1 = (Player) o;
 	        return id == player1.id &&
 	                Objects.equals(name, player1.name);
@@ -62,6 +58,7 @@ public class Player
 
 	    @Override
 	    public int hashCode() {
+	    	System.out.println(Objects.hash(name,id));
 	        return Objects.hash(name, id);
 	    }
 }
