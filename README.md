@@ -1,6 +1,6 @@
 # TP Architecture Logicielle / Inf4043 - 2017 - Jeux de lettres
 
-## Description :
+## Description
 
 -**Membres du projet :**
 
@@ -15,7 +15,23 @@ Les règles du jeu sont visibles sur le GitHub du professeur de l'ESIEA responsa
 
 https://github.com/MLabusquiere/TP_4A_2017_Letter_Game
 
-## Trois principes SOLID ou Design Patterns utilisés :
+## Comment compiler
+
+-**Lignes de commande :**
+
+Le jeu est en affichage console et il est nécéssaire, pour pouvoir générer le .jar,  
+d'exécuter lers commandes bash suivantes sur Linux :
+
+```
+$ git clone https://github.com/MLabusquiere/TP_4A_2017_Letter_Game.git LetterGame
+$ cd LetterGame
+$ git remote rm origin
+$ git remote add origin <your_git_repository_url>
+$ git push -u origin master
+```
+
+
+## Trois principes SOLID ou Design Patterns utilisés
 
 -**Open/Close Principle (Player) :**
 
