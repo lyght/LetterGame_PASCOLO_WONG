@@ -24,7 +24,7 @@ d'exécuter les commandes bash suivantes sur Linux :
 
 ```
 $ git clone https://github.com/lyght/LetterGame_PASCOLO_WONG LetterGame
-$ cd LetterGame/src
+$ cd LetterGame/src/
 $ javac Main.java
 $ java Main
 ```
