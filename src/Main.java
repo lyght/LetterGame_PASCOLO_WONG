@@ -10,7 +10,7 @@ public class Main {
 	
 	public static void begin()
 	{
-		String dictionnaryPath = "src/resources/dico.txt";
+		String dictionnaryPath = "/src/resources/dico.txt";
 		int nbOfPlayers = 0;
 		int nbOfIA = 0;
 		do{
