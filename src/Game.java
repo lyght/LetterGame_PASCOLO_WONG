@@ -1,11 +1,13 @@
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game
 {
+	Dictionnary dictionnary = null;
 	ArrayList<Player> players = new ArrayList<>();
 	
 	LetterContainer commonPot = new LetterContainer();
@@ -13,8 +15,15 @@ public class Game
 	int nbOfPlayers = 0;
 	int currentPlayerIndex = -1;
 	
-	Game(int nbOfPlayers)
+	Game(int nbOfPlayers, String dictionnaryPath)
 	{
+		try
+		{
+			this.dictionnary = new Dictionnary(dictionnaryPath);
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 		this.nbOfPlayers = nbOfPlayers;
 		createPlayers();
 		currentPlayerIndex = chooseFirstPlayer();
@@ -27,7 +36,7 @@ public class Game
 			System.out.println("Player " + (i+1) + " :");
 			addNewPlayer(i);
 			Letter playerLetter = LetterFactory.getLetter();
-			System.out.println(players.get(i).getName() + " picked letter " + playerLetter + "\n");
+			System.out.println("(" + players.get(i).getName() + " picked letter " + playerLetter + " )\n");
 			commonPot.addLetter(playerLetter);
 		}
 	}
@@ -73,35 +82,52 @@ public class Game
 	private int chooseFirstPlayer()
 	{
 		int firstPlayerIndex = commonPot.getMinimumLetterIndex();
-		System.out.println("Player " + players.get(firstPlayerIndex).getName() + " will begin.\n");
+		System.out.println(("Player " + players.get(firstPlayerIndex).getName() + " will begin.\n").toUpperCase());
 		return commonPot.getMinimumLetterIndex();
 	}
 
 	public void launchGame()
 	{
-		showPlayers();
-		//showCommonPot();
+		newTurn(currentPlayerIndex);
+	}
+	
+	private void changePlayer()
+	{
+		currentPlayerIndex = (currentPlayerIndex + 1)%nbOfPlayers;
 		newTurn(currentPlayerIndex);
 	}
 	
 	private void newTurn(int playerIndex)
 	{
 		System.out.println(getPlayerNameFromId(playerIndex) + ", it is your turn.\n");
+		addLettersToCommonPot(2);
 		showCommonPot();
 		showPlayerBoards();
-		addLettersToCommonPot(2);
+		
 		int choice = -1;
 		while (choice == -1)
 		{
 			choice = selectChoice();
 		}
-		doActionWithChoice(choice);
+		while(doActionWithChoice(choice))
+		{
+			addLettersToCommonPot(1);
+			choice = -1;
+			showCommonPot();
+			showPlayerBoards();
+			System.out.println("You can play again.");
+			while (choice == -1)
+			{
+				choice = selectChoice();
+			}
+		}
+		changePlayer();
 	}
 	
 	private int selectChoice()
 	{
 		Scanner reader = new Scanner(System.in);
-		System.out.println("Write the number:\n1 to make a word from the common pot \n2 to make your word from another player word");
+		System.out.println("Enter the number corresponding to your action:\n1 to make a word from the common pot \n2 to make your word from another player word");
 		if(reader.hasNextInt())
 		{
 			int choice = reader.nextInt();
@@ -120,23 +146,64 @@ public class Game
 		}
 	}
 	
-	private void doActionWithChoice(int choice)
+	private boolean doActionWithChoice(int choice)
 	{
 		if(choice == 1)
-			makeWordWithCommonLetters();
+			return makeWordWithCommonLetters();
 		else
-			makeWordWithStolenWord();
+			return makeWordWithOtherPlayerWord();
 	}
 	
-	private void makeWordWithCommonLetters()
+	private boolean makeWordWithCommonLetters()
 	{
-		//showCommonPot();
-		System.out.println("Type the word you want to make:");
+		String word;
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Enter the word you want to make:");
+		word = reader.nextLine();
+		if(doesCommonPotContainsLettersOf(new Word(word)) && dictionnary.isWordValid(word))
+		{
+			System.out.println("The word " + word + " has been added to your player board.");
+			return true;
+		}
+		return false;
 	}
 	
-	private void makeWordWithStolenWord()
+	private boolean makeWordWithOtherPlayerWord()
 	{
-		System.out.println("Type the name of the player:");
+		String playerName;
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Enter the name of the player:");
+		playerName = reader.nextLine();
+		Player playerToSteal = getPlayerByName(playerName);
+		String wordToSteal;
+		//Scanner reader = new Scanner(System.in);
+		System.out.println("Enter the word you want to steal:");
+		wordToSteal = reader.nextLine();
+		if(playerToSteal.stealWord(new Word(wordToSteal)))
+		{
+			System.out.println("Word stolen");
+			return true;
+		}
+		return false;
+	}
+	
+	private Player getPlayerByName(String playerName)
+	{
+		for(Player player : players)
+		{
+			if(player.getName().equalsIgnoreCase(playerName))
+			{
+				return player;
+			}
+		}
+		System.out.println("This player does not exist");
+		makeWordWithOtherPlayerWord();
+		return null;
+	}
+	
+	private boolean doesCommonPotContainsLettersOf(Word wordEntered)
+	{
+		return commonPot.isWordPossibleWith(wordEntered.getLetters());
 	}
 	
 	private void addLettersToCommonPot(int nbOfLetters)
@@ -165,7 +232,8 @@ public class Game
 	{
 		for(Player player : players)
 		{
-			System.out.println(player.getWords());
+			player.showPlayerBoard();
+			System.out.println();
 		}
 		System.out.println();
 	}
