@@ -28,20 +28,40 @@ public class LetterContainer
 	
 	public boolean isWordPossibleWith(ArrayList<Letter> lettersToTest)
 	{
-		
-		if(lettersToTest.size() > letters.size())
+		ArrayList<Letter> lettersSave = new ArrayList<Letter>(lettersToTest);
+		if(lettersSave.size() > letters.size())
 		{
 			System.out.println("This word cannot be made with available letters.");
 			return false;
 		}
-		ArrayList<Letter> lettersSave = new ArrayList<Letter>(lettersToTest);
-		lettersToTest.removeAll(letters);
-		if(lettersToTest.size() == 0)
+		lettersSave = lettersDifference(lettersSave, letters);
+		if(lettersSave.size() == 0)
 		{
-			this.letters.removeAll(lettersSave);
 			return true;
 		}
 		else
 			return false;
+	}
+	
+	public ArrayList<Letter> lettersDifference(ArrayList<Letter> listToKeep, ArrayList<Letter> listToRemoveFromFirst)
+	{
+		ArrayList<Letter> lettersSave = new ArrayList<Letter>(listToKeep);
+		for (int i = 0; i < listToRemoveFromFirst.size(); i++)
+		{
+			listToKeep.remove(listToRemoveFromFirst.get(i));
+		}
+		/*if(listToKeep.size() == 0)
+		{
+			removeLettersFromCommonPot(lettersSave);
+		}*/
+		return listToKeep;
+	}
+	
+	public void removeLetters(ArrayList<Letter> lettersToRemove)
+	{
+		for (int i = 0; i < lettersToRemove.size(); i++)
+		{
+			letters.remove(lettersToRemove.get(i));
+		}
 	}
 }
