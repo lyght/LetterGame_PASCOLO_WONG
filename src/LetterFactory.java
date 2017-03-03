@@ -22,7 +22,7 @@ public class LetterFactory
 	
 	public static void initializeLettersFrequency()
 	{
-		letters = getFrequencyFromFile("/src/resources/lettersFrequency.txt");
+		letters = getFrequencyFromFile("/resources/lettersFrequency.txt");
 	}
 	
 	private static char[] getFrequencyFromFile(String path)
