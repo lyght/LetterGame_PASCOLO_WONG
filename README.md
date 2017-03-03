@@ -18,12 +18,12 @@ Ce principe est un des principes de base de codage propre, et il est exploité a
 dans lequel aucun champ de classe ne peut être modifié directement et les mutateurs sont tous régulés par des limites.
 
 -**Design Pattern Iterator (Dictionnary) :**
-
+```
 while (scanner.hasNext())
 	{
 		dictionnaryWords.add(scanner.nextLine().toUpperCase());
 	}
-
+```
 Le Scanner de Java est implémenté selon le design pattern iterator qui permet de parcourir l'ensemble du dictionnaire 
 sous forme de texte sans en connaître la taille ni les caractéristiques (vide, nombre de lignes, structure).
 
