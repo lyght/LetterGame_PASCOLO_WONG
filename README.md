@@ -18,7 +18,7 @@ Ce principe est un des principes de base de codage propre, et il est exploité a
 dans lequel aucun champ de classe ne peut être modifié directement et les mutateurs sont tous régulés par des limites.
 
 -**Design Pattern Iterator (Dictionnary) :**
-```
+```java
 while (scanner.hasNext())
 	{
 		dictionnaryWords.add(scanner.nextLine().toUpperCase());
