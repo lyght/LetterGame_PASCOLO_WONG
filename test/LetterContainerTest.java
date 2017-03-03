@@ -29,7 +29,7 @@ public class LetterContainerTest {
 	}
 	@Test
 	public void TestgetLetters(){
-		
+		fail("Not yet implemented");
 	}
 	
 	@Test
