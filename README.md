@@ -15,7 +15,7 @@ Les règles du jeu sont visibles sur le GitHub du professeur de l'ESIEA responsa
 
 https://github.com/MLabusquiere/TP_4A_2017_Letter_Game
 
-## Comment compiler
+## Comment jouer
 
 -**Lignes de commande :**
 
