@@ -30,4 +30,14 @@ public class Dictionnary
 	{
 		System.out.println(dictionnaryWords.toString());
 	}
+	
+	public int getNbOfWords()
+	{
+		return dictionnaryWords.size();
+	}
+	
+	public String getWordWithIndex(int index)
+	{
+		return dictionnaryWords.get(index);
+	}
 }
