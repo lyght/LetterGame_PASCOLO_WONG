@@ -34,13 +34,14 @@ $ git push -u origin master
 
 -**Les packages :**
 Il y a deux packages principaux,  
-**src**, qui contient le code source du projet  
-**test** qui contient les tests unitaires
+   * **src**, qui contient le code source du projet  
+   * **test** qui contient les tests unitaires
 
 -**Les ressources :**
 Le dossier resources du package **src** contient deux fichiers :  
-**dico.txt** qui correspond au dictionniaire de mots récupéré à l'adresse http://www.freelang.com/dictionnaire/dic-francais.php
-**lettersFrequency** contenant à la suite les occurrences de mots et généré par nos soins grâce à un autre programme Java.
+   * **dico.txt** qui correspond au dictionniaire de mots récupéré à l'adresse  
+   http://www.freelang.com/dictionnaire/dic-francais.php
+   * **lettersFrequency** contenant à la suite les occurrences de mots et généré par nos soins grâce à un autre programme Java.
 
 ## Trois principes SOLID ou Design Patterns utilisés
 
