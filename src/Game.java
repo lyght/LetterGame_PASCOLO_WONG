@@ -176,7 +176,14 @@ public class Game
 	{
 		String iAWord = AImakeWordWithCommonLetters();
 		if(iAWord != "")
+		{
+			addLettersToCommonPot(1);
 			System.out.println(playerAIName + " made the word " + iAWord);
+		}
+		else
+		{
+			System.out.println(playerAIName + " did not manage to make a word");
+		}
 	}
 	
 	private int selectChoice()
