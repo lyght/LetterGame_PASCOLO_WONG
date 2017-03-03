@@ -19,15 +19,14 @@ https://github.com/MLabusquiere/TP_4A_2017_Letter_Game
 
 -**Lignes de commande :**
 
-Le jeu est en affichage console et il est nécéssaire, pour pouvoir générer le .jar,  
-d'exécuter lers commandes bash suivantes sur Linux :
+Le jeu est en affichage console et il est nécéssaire, pour le lancer,  
+d'exécuter les commandes bash suivantes sur Linux :
 
 ```
-$ git clone https://github.com/MLabusquiere/TP_4A_2017_Letter_Game.git LetterGame
-$ cd LetterGame
-$ git remote rm origin
-$ git remote add origin <your_git_repository_url>
-$ git push -u origin master
+$ git clone https://github.com/lyght/LetterGame_PASCOLO_WONG LetterGame
+$ cd LetterGame/src/
+$ javac Main.java
+$ java Main
 ```
 
 ## Architecture
