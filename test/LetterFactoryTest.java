@@ -1,7 +1,6 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -10,7 +9,7 @@ public class LetterFactoryTest {
 
 	@Test
 	public void TestgetRandomCharacter (){
-		
+/*		
 		ArrayList<Character> letters = new ArrayList<Character>();
 		for(int i =0; i<100000;i++){
 			
@@ -39,6 +38,9 @@ public class LetterFactoryTest {
 		}
 		
 	}
-	
+	*/
+		fail("Not yet implemented");
+
+	}
 }
 	
